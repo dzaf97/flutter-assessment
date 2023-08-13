@@ -7,18 +7,18 @@ part of 'user.dart';
 // **************************************************************************
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
-      id: json['id'] as int?,
+      id: json['id'],
       email: json['email'] as String?,
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
       avatar: json['avatar'] as String?,
       isFav: const RxBoolComverter().fromJson(json['is_fav']),
-      createdAt: json['created_at'] == null
+      createdAt: json['createdAt'] == null
           ? null
-          : DateTime.parse(json['created_at'] as String),
-      updatedAt: json['updated_at'] == null
+          : DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
           ? null
-          : DateTime.parse(json['updated_at'] as String),
+          : DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -27,7 +27,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'avatar': instance.avatar,
-      'created_at': instance.createdAt?.toIso8601String(),
-      'updated_at': instance.updatedAt?.toIso8601String(),
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
       'is_fav': const RxBoolComverter().toJson(instance.isFav),
     };

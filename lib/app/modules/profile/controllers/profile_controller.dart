@@ -1,7 +1,7 @@
-import 'package:flutter_assessment/app/core/theme/theme.dart';
 import 'package:flutter_assessment/app/core/utils/app_snackbar.dart';
 import 'package:flutter_assessment/app/data/model/rf_infinite/user.dart';
 import 'package:flutter_assessment/app/modules/home/controllers/home_controller.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,7 +13,9 @@ class ProfileController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    EasyLoading.show();
     await initUser();
+    EasyLoading.dismiss();
   }
 
   initUser() async {

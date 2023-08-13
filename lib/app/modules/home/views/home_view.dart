@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_assessment/app/core/theme/theme.dart';
 import 'package:flutter_assessment/app/modules/home/views/all_contact_view.dart';
 import 'package:flutter_assessment/app/modules/home/views/fav_contact_view.dart';
+import 'package:flutter_assessment/app/routes/app_pages.dart';
 
 import 'package:get/get.dart';
 
@@ -84,7 +85,9 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () => Get.toNamed(Routes.EDIT_PROFILE, arguments: {
+            'isEdit': false,
+          }),
           child: const Icon(
             Icons.add,
             color: Colors.white,

@@ -5,12 +5,14 @@ part 'user.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class User {
-  int? id;
+  dynamic id;
   String? email;
   String? firstName;
   String? lastName;
   String? avatar;
+  @JsonKey(name: 'createdAt')
   DateTime? createdAt;
+  @JsonKey(name: 'updatedAt')
   DateTime? updatedAt;
 
   @RxBoolComverter()

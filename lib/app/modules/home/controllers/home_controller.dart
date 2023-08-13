@@ -4,6 +4,7 @@ import 'package:flutter_assessment/app/core/utils/verify_response.dart';
 import 'package:flutter_assessment/app/data/model/rf_infinite/user.dart';
 import 'package:flutter_assessment/app/data/provider/storage_provider.dart';
 import 'package:flutter_assessment/app/data/repositories/user_repositories.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -30,8 +31,10 @@ class HomeController extends GetxController {
   }
 
   onSyncContact() async {
+    EasyLoading.show();
     Get.find<StorageProvider>().users = users;
     var response = await _userRepo.getAllUser();
+    EasyLoading.dismiss();
     if (verifyResponse(response)) return;
     (response as List<User>);
     for (var user in response) {

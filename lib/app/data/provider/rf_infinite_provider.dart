@@ -45,11 +45,10 @@ class RfInfiniteProvider extends GetConnect {
       '/users',
       body: request.toJson(),
     );
+    print(response.bodyString);
     if (response.isOk) {
       try {
-        var baseResponse =
-            BaseResponse.fromJson(jsonDecode(response.bodyString!));
-        return User.fromJson(baseResponse.data);
+        return User.fromJson(jsonDecode(response.bodyString!));
       } catch (e) {
         return AppError(message: e.toString());
       }

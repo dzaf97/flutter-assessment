@@ -24,8 +24,10 @@ class ProfileView extends GetView<ProfileController> {
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             alignment: Alignment.topRight,
             child: TextButton(
-              onPressed: () => Get.toNamed(Routes.EDIT_PROFILE,
-                  arguments: {'id': controller.user.value!.id}),
+              onPressed: () => Get.toNamed(Routes.EDIT_PROFILE, arguments: {
+                'id': controller.user.value!.id,
+                'isEdit': true,
+              }),
               child: const Text(
                 'Edit',
                 style: TextStyle(fontSize: 16),

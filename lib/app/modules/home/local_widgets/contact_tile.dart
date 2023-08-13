@@ -31,8 +31,10 @@ class ContactTile extends StatelessWidget {
             foregroundColor: Colors.white,
             child: IconButton(
               splashRadius: 25,
-              onPressed: () =>
-                  Get.toNamed(Routes.EDIT_PROFILE, arguments: {'id': user.id}),
+              onPressed: () => Get.toNamed(Routes.EDIT_PROFILE, arguments: {
+                'id': user.id,
+                'isEdit': true,
+              }),
               icon: SvgPicture.asset('assets/svg/edit.svg'),
             ),
           ),
