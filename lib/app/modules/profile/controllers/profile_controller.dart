@@ -1,12 +1,12 @@
-import 'package:flutter_assessment/app/core/utils/verify_response.dart';
+import 'package:flutter_assessment/app/core/theme/theme.dart';
+import 'package:flutter_assessment/app/core/utils/app_snackbar.dart';
 import 'package:flutter_assessment/app/data/model/rf_infinite/user.dart';
-import 'package:flutter_assessment/app/data/repositories/user_repositories.dart';
+import 'package:flutter_assessment/app/modules/home/controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileController extends GetxController {
-  final UserRepo _userRepo;
-  ProfileController(this._userRepo);
+  ProfileController();
   RxBool isFav = false.obs;
   Rx<User?> user = Rx(null);
 
@@ -17,28 +17,31 @@ class ProfileController extends GetxController {
   }
 
   initUser() async {
-    int id = Get.arguments['id'];
-    var response = await _userRepo.getSingleUser(id);
-    if (verifyResponse(response)) return;
-    user.value = response as User;
+    user.value = Get.arguments['user'] as User;
+    isFav.value = user.value!.isFav!.value;
   }
 
   sendEmail() async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'smith@example.com',
-      query: encodeQueryParameters(<String, String>{
-        'subject': 'Example Subject & Symbols are allowed!',
-      }),
+      path: user.value?.email ?? '',
     );
 
-    launchUrl(emailLaunchUri);
+    await launchUrl(emailLaunchUri);
   }
 
-  String? encodeQueryParameters(Map<String, String> params) {
-    return params.entries
-        .map((MapEntry<String, String> e) =>
-            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-        .join('&');
+  favorite() {
+    isFav.value = !isFav.value;
+    user.value!.isFav!.value = isFav.value;
+    Get.find<HomeController>().initFavoriteUser();
+    if (isFav.value) {
+      AppSnackbar.successSnackbar(
+        title: "${user.value!.firstName!} successfully added to favorite!",
+      );
+    } else {
+      AppSnackbar.successSnackbar(
+        title: "${user.value!.firstName!} successfully removed from favorite!",
+      );
+    }
   }
 }

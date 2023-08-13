@@ -14,7 +14,7 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ProfileView'),
+        title: const Text('Profile'),
         elevation: 0,
         centerTitle: true,
       ),
@@ -24,7 +24,8 @@ class ProfileView extends GetView<ProfileController> {
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             alignment: Alignment.topRight,
             child: TextButton(
-              onPressed: () => Get.toNamed(Routes.EDIT_PROFILE),
+              onPressed: () => Get.toNamed(Routes.EDIT_PROFILE,
+                  arguments: {'id': controller.user.value!.id}),
               child: const Text(
                 'Edit',
                 style: TextStyle(fontSize: 16),
@@ -48,10 +49,9 @@ class ProfileView extends GetView<ProfileController> {
               ),
               Positioned(
                 bottom: 0,
-                right: 145,
+                right: Get.width * 0.33,
                 child: IconButton(
-                  onPressed: () =>
-                      controller.isFav.value = !controller.isFav.value,
+                  onPressed: () => controller.favorite(),
                   icon: Obx(() => Icon(
                         Icons.star,
                         size: 40,

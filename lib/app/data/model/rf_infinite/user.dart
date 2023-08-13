@@ -10,6 +10,8 @@ class User {
   String? firstName;
   String? lastName;
   String? avatar;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   @RxBoolComverter()
   RxBool? isFav;
@@ -21,6 +23,8 @@ class User {
     this.lastName,
     this.avatar,
     this.isFav,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

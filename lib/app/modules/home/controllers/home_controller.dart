@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_assessment/app/core/utils/verify_response.dart';
 import 'package:flutter_assessment/app/data/model/rf_infinite/user.dart';
 import 'package:flutter_assessment/app/data/provider/storage_provider.dart';
@@ -11,17 +12,19 @@ class HomeController extends GetxController {
 
   RxInt selectedTab = 0.obs;
   RxList<User> users = RxList();
+  RxList<User> allUser = RxList();
   RxList<User> favoriteUsers = RxList();
+  TextEditingController searchContact = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
-
-    if (kDebugMode) {
-      print(Get.find<StorageProvider>().users);
-    }
-
     users.value = Get.find<StorageProvider>().users;
+    allUser.value = users;
+    initFavoriteUser();
+  }
+
+  initFavoriteUser() {
     favoriteUsers.value =
         users.where((element) => element.isFav!.value).toList();
   }
@@ -40,8 +43,15 @@ class HomeController extends GetxController {
         users.add(user);
       }
     }
-
     Get.find<StorageProvider>().users = users;
+  }
+
+  onSearchContact(String value) {
+    allUser.value = users
+        .where((p0) =>
+            "${p0.firstName!.toLowerCase()} ${p0.lastName!.toLowerCase()}"
+                .contains(value.toLowerCase()))
+        .toList();
   }
 
   onDeleteUser(int id) {
@@ -50,6 +60,7 @@ class HomeController extends GetxController {
     }
     users.removeWhere((element) => element.id == id);
     Get.find<StorageProvider>().users = users;
+    initFavoriteUser();
     Get.back();
   }
 }

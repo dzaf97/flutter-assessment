@@ -68,6 +68,6 @@ class RxBoolComverter extends JsonConverter<RxBool?, dynamic> {
 
   @override
   dynamic toJson(dynamic object) {
-    return (object as RxBool).value;
+    return (object == null) ? null : (object as RxBool).value;
   }
 }

@@ -38,7 +38,8 @@ class HomeView extends GetView<HomeController> {
                   color: Colors.white,
                 ),
                 child: TextField(
-                  controller: TextEditingController(),
+                  controller: controller.searchContact,
+                  onChanged: (value) => controller.onSearchContact(value),
                   decoration: const InputDecoration(
                     hintText: 'Search Contact',
                     hintStyle: TextStyle(),
@@ -81,6 +82,14 @@ class HomeView extends GetView<HomeController> {
               ][controller.selectedTab.value],
             )
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+            size: 30,
+          ),
         ),
       ),
     );

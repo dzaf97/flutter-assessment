@@ -5,6 +5,7 @@ import 'package:flutter_assessment/app/routes/app_pages.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactTile extends StatelessWidget {
   const ContactTile({
@@ -65,32 +66,13 @@ class ContactTile extends StatelessWidget {
           width: Get.width * 0.9,
           child: ListTile(
             splashColor: const Color(0xFF32BAA5),
-            onTap: () =>
-                Get.toNamed(Routes.PROFILE, arguments: {'id': user.id}),
-            onLongPress: () {
-              user.isFav!.value = !user.isFav!.value;
-              if (user.isFav!.value) {
-                Get.snackbar(
-                  'Add to favorite!',
-                  "${user.firstName!} successfully added to favorite",
-                  backgroundColor: AppColor.secondary,
-                  snackPosition: SnackPosition.BOTTOM,
-                );
-              } else {
-                Get.snackbar(
-                  'Remove from favorite!',
-                  "${user.firstName!} successfully removed from favorite",
-                  backgroundColor: AppColor.secondary,
-                  snackPosition: SnackPosition.BOTTOM,
-                );
-              }
-            },
+            onTap: () => Get.toNamed(Routes.PROFILE, arguments: {'user': user}),
             leading: CircleAvatar(
               radius: 30,
               child: ClipOval(
                 child: (user.avatar != null)
                     ? Image.network(user.avatar!)
-                    : Image.asset('assets/images/DP.png'),
+                    : const Icon(Icons.person_2_rounded),
               ),
             ),
             title: Row(
@@ -105,7 +87,17 @@ class ContactTile extends StatelessWidget {
               ],
             ),
             subtitle: Text(user.email ?? '-'),
-            trailing: SvgPicture.asset('assets/svg/Frame.svg'),
+            trailing: GestureDetector(
+              onTap: () async {
+                final Uri emailLaunchUri = Uri(
+                  scheme: 'mailto',
+                  path: user.email ?? '',
+                );
+
+                await launchUrl(emailLaunchUri);
+              },
+              child: SvgPicture.asset('assets/svg/Frame.svg'),
+            ),
           ),
         ),
       ),

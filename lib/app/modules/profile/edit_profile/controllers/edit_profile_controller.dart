@@ -1,23 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_assessment/app/core/utils/app_snackbar.dart';
+import 'package:flutter_assessment/app/core/utils/verify_response.dart';
+import 'package:flutter_assessment/app/data/model/app_error.dart';
+import 'package:flutter_assessment/app/data/model/rf_infinite/user.dart';
+import 'package:flutter_assessment/app/data/repositories/user_repositories.dart';
 import 'package:get/get.dart';
 
 class EditProfileController extends GetxController {
-  //TODO: Implement EditProfileController
+  final UserRepo _userRepo;
+  EditProfileController(this._userRepo);
 
-  final count = 0.obs;
+  final formKey = GlobalKey<FormState>();
+  TextEditingController firstName = TextEditingController();
+  TextEditingController lastName = TextEditingController();
+  TextEditingController email = TextEditingController();
+  Rx<User?> user = Rx(null);
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await initUser();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  initUser() async {
+    int id = Get.arguments['id'];
+    var response = await _userRepo.getSingleUser(id);
+    if (verifyResponse(response)) return;
+    user.value = response as User;
+    firstName.text = user.value?.firstName ?? '';
+    lastName.text = user.value?.lastName ?? '';
+    email.text = user.value?.email ?? '';
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  editPhoto() {}
 
-  void increment() => count.value++;
+  onDone() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    var response = await _userRepo.editUser(
+        User(
+          firstName: firstName.text,
+          lastName: lastName.text,
+          email: email.text,
+          avatar: '',
+        ),
+        user.value!.id!);
+
+    if (verifyResponse(response)) {
+      AppSnackbar.errorSnackbar(title: (response as AppError).message);
+      return;
+    }
+    AppSnackbar.successSnackbar(title: 'Successfully edit!');
+  }
 }

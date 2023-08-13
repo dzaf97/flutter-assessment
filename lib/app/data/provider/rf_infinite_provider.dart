@@ -39,4 +39,41 @@ class RfInfiniteProvider extends GetConnect {
           message: response.statusText ?? 'Internet connection error');
     }
   }
+
+  postUser(User request) async {
+    var response = await httpClient.post(
+      '/users',
+      body: request.toJson(),
+    );
+    if (response.isOk) {
+      try {
+        var baseResponse =
+            BaseResponse.fromJson(jsonDecode(response.bodyString!));
+        return User.fromJson(baseResponse.data);
+      } catch (e) {
+        return AppError(message: e.toString());
+      }
+    } else {
+      return AppError(
+          message: response.statusText ?? 'Internet connection error');
+    }
+  }
+
+  putUser(User request, int userId) async {
+    var response = await httpClient.put(
+      '/users/$userId',
+      body: request.toJson(),
+    );
+
+    if (response.isOk) {
+      try {
+        return User.fromJson(jsonDecode(response.bodyString!));
+      } catch (e) {
+        return AppError(message: e.toString());
+      }
+    } else {
+      return AppError(
+          message: response.statusText ?? 'Internet connection error');
+    }
+  }
 }

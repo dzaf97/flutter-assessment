@@ -12,7 +12,7 @@ class AllContactView extends GetView<HomeController> {
     return Expanded(
       child: Obx(
         () => ListView(
-          children: controller.users
+          children: controller.allUser
               .map(
                 (user) => ContactTile(
                   user: user,
