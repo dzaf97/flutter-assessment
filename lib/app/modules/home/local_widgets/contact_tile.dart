@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_assessment/app/core/theme/theme.dart';
 import 'package:flutter_assessment/app/data/model/rf_infinite/user.dart';
+import 'package:flutter_assessment/app/routes/app_pages.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,8 @@ class ContactTile extends StatelessWidget {
             foregroundColor: Colors.white,
             child: IconButton(
               splashRadius: 25,
-              onPressed: () {},
+              onPressed: () =>
+                  Get.toNamed(Routes.EDIT_PROFILE, arguments: {'id': user.id}),
               icon: SvgPicture.asset('assets/svg/edit.svg'),
             ),
           ),
@@ -63,6 +65,8 @@ class ContactTile extends StatelessWidget {
           width: Get.width * 0.9,
           child: ListTile(
             splashColor: const Color(0xFF32BAA5),
+            onTap: () =>
+                Get.toNamed(Routes.PROFILE, arguments: {'id': user.id}),
             onLongPress: () {
               user.isFav!.value = !user.isFav!.value;
               if (user.isFav!.value) {

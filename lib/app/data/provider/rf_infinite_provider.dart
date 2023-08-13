@@ -24,9 +24,13 @@ class RfInfiniteProvider extends GetConnect {
       try {
         var baseResponse =
             BaseResponse.fromJson(jsonDecode(response.bodyString!));
-        return (baseResponse.data as List<dynamic>)
-            .map((e) => User.fromJson(e))
-            .toList();
+        if (userId == null) {
+          return (baseResponse.data as List<dynamic>)
+              .map((e) => User.fromJson(e))
+              .toList();
+        } else {
+          return User.fromJson(baseResponse.data);
+        }
       } catch (e) {
         return AppError(message: e.toString());
       }

@@ -12,7 +12,6 @@ class User {
   String? avatar;
 
   @RxBoolComverter()
-  @JsonKey(includeFromJson: false)
   RxBool? isFav;
 
   User({

@@ -58,12 +58,12 @@ class RxStringComverter extends JsonConverter<RxString, dynamic> {
   }
 }
 
-class RxBoolComverter extends JsonConverter<RxBool, dynamic> {
+class RxBoolComverter extends JsonConverter<RxBool?, dynamic> {
   const RxBoolComverter();
 
   @override
-  RxBool fromJson(dynamic json) {
-    return RxBool(json);
+  RxBool? fromJson(dynamic json) {
+    return (json == null) ? null : RxBool(json);
   }
 
   @override

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_assessment/app/core/theme/theme.dart';
 import 'package:flutter_assessment/app/modules/home/controllers/home_controller.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 

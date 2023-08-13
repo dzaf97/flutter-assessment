@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/edit_profile/bindings/edit_profile_binding.dart';
+import '../modules/profile/edit_profile/views/edit_profile_view.dart';
 import '../modules/profile/views/profile_view.dart';
 
 part 'app_routes.dart';
@@ -22,6 +24,13 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+      children: [
+        GetPage(
+          name: _Paths.EDIT_PROFILE,
+          page: () => const EditProfileView(),
+          binding: EditProfileBinding(),
+        ),
+      ],
     ),
   ];
 }
